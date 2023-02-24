@@ -2,8 +2,14 @@ package com.driver.service.impl;
 
 import com.driver.io.entity.FoodEntity;
 import com.driver.io.repository.FoodRepository;
+import com.driver.model.request.FoodDetailsRequestModel;
+import com.driver.model.response.FoodDetailsResponse;
+import com.driver.model.response.OperationStatusModel;
+import com.driver.model.response.RequestOperationName;
+import com.driver.model.response.RequestOperationStatus;
 import com.driver.service.FoodService;
 import com.driver.shared.dto.FoodDto;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,8 +59,6 @@ public class FoodServiceImpl implements FoodService {
         foodEntity.setFoodName(foodDetails.getFoodName());
         foodEntity.setFoodCategory(foodDetails.getFoodCategory());
         foodEntity.setFoodPrice(foodDetails.getFoodPrice());
-        foodDetails.setFoodId(foodId);
-        foodDetails.setId(foodEntity.getId());
         // save
         foodRepository.save(foodEntity);
 
@@ -85,5 +89,73 @@ public class FoodServiceImpl implements FoodService {
         }
 
         return foodDtoList;
+    }
+
+    /*-------------------------------------------------------------------------------*/
+
+    @Override
+    public FoodDetailsResponse get_Food_By_Id(String id) throws Exception {
+        FoodDetailsResponse returnValue = new FoodDetailsResponse();
+
+        FoodDto foodDto = getFoodById(id);
+        BeanUtils.copyProperties(foodDto, returnValue);
+        return returnValue;
+    }
+
+    @Override
+    public FoodDetailsResponse create_Food(FoodDetailsRequestModel foodDetails) {
+        FoodDetailsResponse returnValue = new FoodDetailsResponse();
+
+        FoodDto food = new FoodDto();
+        BeanUtils.copyProperties(foodDetails,food);
+
+        FoodDto foodDto = createFood(food);
+        BeanUtils.copyProperties(foodDto, returnValue);
+        return returnValue;
+    }
+
+    @Override
+    public FoodDetailsResponse update_Food(String id, FoodDetailsRequestModel foodDetails) throws Exception {
+        FoodDetailsResponse returnValue = new FoodDetailsResponse();
+
+        FoodDto food = new FoodDto();
+        BeanUtils.copyProperties(foodDetails,food);
+
+        FoodDto foodDto = updateFoodDetails(id,food);
+        BeanUtils.copyProperties(foodDto, returnValue);
+        return returnValue;
+    }
+
+    @Override
+    public OperationStatusModel delete_Food(String id) {
+        OperationStatusModel operationStatusModel = new OperationStatusModel();
+        operationStatusModel.setOperationName(RequestOperationName.DELETE.toString());
+        try{
+            deleteFoodItem(id);
+        } catch (Exception e){
+            operationStatusModel.setOperationResult(RequestOperationStatus.ERROR.toString());
+            return operationStatusModel;
+        }
+
+        operationStatusModel.setOperationResult(RequestOperationStatus.SUCCESS.toString());
+        return operationStatusModel;
+    }
+
+    @Override
+    public List<FoodDetailsResponse> get_foods() {
+        List<FoodDto> foodDtoList = getFoods();
+        List<FoodDetailsResponse> foodDetailsResponseList = new ArrayList<>();
+        for(FoodDto f : foodDtoList){
+
+            FoodDetailsResponse dto =  new FoodDetailsResponse();
+            dto.setFoodId(f.getFoodId());
+            dto.setFoodName(f.getFoodName());
+            dto.setFoodCategory(f.getFoodCategory());
+            dto.setFoodPrice(f.getFoodPrice());
+
+            foodDetailsResponseList.add(dto);
+
+        }
+        return foodDetailsResponseList;
     }
 }

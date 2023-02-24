@@ -26,68 +26,26 @@ public class FoodController {
 	FoodService foodService;
 	@GetMapping(path="/{id}")
 	public FoodDetailsResponse getFood(@PathVariable String id) throws Exception{
-		FoodDetailsResponse returnValue = new FoodDetailsResponse();
-
-		FoodDto foodDto = foodService.getFoodById(id);
-		BeanUtils.copyProperties(foodDto, returnValue);
-		return returnValue;
+		return foodService.get_Food_By_Id(id);
 	}
 
 	@PostMapping("/create")
 	public FoodDetailsResponse createFood(@RequestBody FoodDetailsRequestModel foodDetails) {
-		FoodDetailsResponse returnValue = new FoodDetailsResponse();
-
-		FoodDto food = new FoodDto();
-		BeanUtils.copyProperties(foodDetails,food);
-
-		FoodDto foodDto = foodService.createFood(food);
-		BeanUtils.copyProperties(foodDto, returnValue);
-		return returnValue;
+		return foodService.create_Food(foodDetails);
 	}
 
 	@PutMapping(path="/{id}")
 	public FoodDetailsResponse updateFood(@PathVariable String id, @RequestBody FoodDetailsRequestModel foodDetails) throws Exception{
-		FoodDetailsResponse returnValue = new FoodDetailsResponse();
-
-		FoodDto food = new FoodDto();
-		BeanUtils.copyProperties(foodDetails,food);
-
-		FoodDto foodDto = foodService.updateFoodDetails(id,food);
-		BeanUtils.copyProperties(foodDto, returnValue);
-		return returnValue;
+		return foodService.update_Food(id,foodDetails);
 	}
 
 	@DeleteMapping(path = "/{id}")
 	public OperationStatusModel deleteFood(@PathVariable String id) throws Exception{
-		OperationStatusModel operationStatusModel = new OperationStatusModel();
-		operationStatusModel.setOperationName(RequestOperationName.DELETE.toString());
-		try{
-			foodService.deleteFoodItem(id);
-		} catch (Exception e){
-			operationStatusModel.setOperationResult(RequestOperationStatus.ERROR.toString());
-			return operationStatusModel;
-		}
-
-		operationStatusModel.setOperationResult(RequestOperationStatus.SUCCESS.toString());
-		return operationStatusModel;
+		return foodService.delete_Food(id);
 	}
 	
 	@GetMapping()
 	public List<FoodDetailsResponse> getFoods() {
-		List<FoodDto> foodDtoList = foodService.getFoods();
-		List<FoodDetailsResponse> foodDetailsResponseList = new ArrayList<>();
-		for(FoodDto f : foodDtoList){
-
-			FoodDetailsResponse dto =  new FoodDetailsResponse();
-			dto.setFoodId(f.getFoodId());
-			dto.setFoodName(f.getFoodName());
-			dto.setFoodCategory(f.getFoodCategory());
-			dto.setFoodPrice(f.getFoodPrice());
-
-			foodDetailsResponseList.add(dto);
-
-		}
-		return foodDetailsResponseList;
-
+		return foodService.get_foods();
 	}
 }

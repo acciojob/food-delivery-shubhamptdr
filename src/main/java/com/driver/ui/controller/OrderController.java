@@ -25,72 +25,27 @@ public class OrderController {
 	OrderService orderService;
 	@GetMapping(path="/{id}")
 	public OrderDetailsResponse getOrder(@PathVariable String id) throws Exception{
-		OrderDetailsResponse returnValue = new OrderDetailsResponse();
-
-		OrderDto orderDto = orderService.getOrderById(id);
-		BeanUtils.copyProperties(orderDto, returnValue);
-
-		return returnValue;
+		return orderService.get_Order(id);
 
 	}
 	
 	@PostMapping()
 	public OrderDetailsResponse createOrder(@RequestBody OrderDetailsRequestModel order) {
-		OrderDetailsResponse returnValue = new OrderDetailsResponse();
-
-		OrderDto dto = new OrderDto();
-		BeanUtils.copyProperties(order,dto);
-
-		OrderDto orderDto = orderService.createOrder(dto);
-		BeanUtils.copyProperties(orderDto, returnValue);
-
-		return returnValue;
+		return orderService.create_Order(order);
 	}
 		
 	@PutMapping(path="/{id}")
 	public OrderDetailsResponse updateOrder(@PathVariable String id, @RequestBody OrderDetailsRequestModel order) throws Exception{
-		OrderDetailsResponse returnValue = new OrderDetailsResponse();
-
-		OrderDto dto = new OrderDto();
-		BeanUtils.copyProperties(order,dto);
-
-		OrderDto orderDto = orderService.updateOrderDetails(id,dto);
-		BeanUtils.copyProperties(orderDto, returnValue);
-
-		return returnValue;
+		return orderService.update_Order(id,order);
 	}
 	
 	@DeleteMapping(path = "/{id}")
 	public OperationStatusModel deleteOrder(@PathVariable String id) throws Exception {
-		OperationStatusModel operationStatusModel = new OperationStatusModel();
-		operationStatusModel.setOperationName(RequestOperationName.DELETE.name());
-
-		try{
-			orderService.deleteOrder(id);
-		}catch (Exception e){
-			operationStatusModel.setOperationResult(RequestOperationStatus.ERROR.name());
-			return operationStatusModel;
-		}
-		operationStatusModel.setOperationResult(RequestOperationStatus.SUCCESS.name());
-		return operationStatusModel;
+		return orderService.delete_Order(id);
 	}
 	
 	@GetMapping()
 	public List<OrderDetailsResponse> getOrders() {
-		List<OrderDto> list = orderService.getOrders();
-		List<OrderDetailsResponse> orderDetailsResponseList = new ArrayList<>();
-		for (OrderDto o : list){
-			OrderDetailsResponse dto = new OrderDetailsResponse();
-			dto.setOrderId(o.getOrderId());
-			dto.setCost(o.getCost());
-			dto.setItems(o.getItems());
-			dto.setUserId(o.getUserId());
-			dto.setStatus(o.isStatus());
-
-
-			orderDetailsResponseList.add(dto);
-		}
-
-		return orderDetailsResponseList;
+		return orderService.get_Orders();
 	}
 }

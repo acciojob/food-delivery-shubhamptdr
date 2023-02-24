@@ -2,8 +2,14 @@ package com.driver.service.impl;
 
 import com.driver.io.entity.UserEntity;
 import com.driver.io.repository.UserRepository;
+import com.driver.model.request.UserDetailsRequestModel;
+import com.driver.model.response.OperationStatusModel;
+import com.driver.model.response.RequestOperationName;
+import com.driver.model.response.RequestOperationStatus;
+import com.driver.model.response.UserResponse;
 import com.driver.service.UserService;
 import com.driver.shared.dto.UserDto;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -115,5 +121,74 @@ public class UserServiceImpl implements UserService{
         }
         return userDtoList;
 
+    }
+
+    /*----------------------------------------------------------*/
+
+    @Override
+    public UserResponse get_user(String id) throws Exception {
+        UserResponse returnValue = new UserResponse();
+
+        UserDto user = getUserByUserId(id);
+        BeanUtils.copyProperties(user, returnValue);
+        return returnValue;
+    }
+
+    @Override
+    public UserResponse create_User(UserDetailsRequestModel userDetails) throws Exception {
+        UserResponse returnValue = new UserResponse();
+
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(userDetails,userDto);
+
+        UserDto user = createUser(userDto);
+        BeanUtils.copyProperties(user, returnValue);
+        return returnValue;
+    }
+
+    @Override
+    public UserResponse update_User(String id, UserDetailsRequestModel userDetails) throws Exception {
+        UserResponse returnValue = new UserResponse();
+
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(userDetails,userDto);
+
+        UserDto user = updateUser(id,userDto);
+        BeanUtils.copyProperties(user, returnValue);
+
+        return returnValue;
+    }
+
+    @Override
+    public OperationStatusModel delete_User(String id) {
+
+        OperationStatusModel operationStatusModel = new OperationStatusModel();
+        operationStatusModel.setOperationName(RequestOperationName.DELETE.toString());
+        try {
+            deleteUser(id);
+        }catch (Exception e){
+            operationStatusModel.setOperationResult(RequestOperationStatus.ERROR.toString());
+            return operationStatusModel;
+        }
+        operationStatusModel.setOperationResult(RequestOperationStatus.SUCCESS.toString());
+
+        return operationStatusModel;
+    }
+
+    @Override
+    public List<UserResponse> get_Users() {
+        List<UserResponse> userResponseList = new ArrayList<>();
+        List<UserDto> userDtoList = getUsers();
+        for (UserDto userDto : userDtoList){
+            UserResponse userResponse = new UserResponse();
+            userResponse.setUserId(userDto.getUserId());
+            userResponse.setEmail(userDto.getEmail());
+            userResponse.setFirstName(userDto.getFirstName());
+            userResponse.setLastName(userDto.getLastName());
+
+            userResponseList.add(userResponse);
+        }
+
+        return userResponseList;
     }
 }

@@ -29,73 +29,31 @@ public class UserController {
 	UserService userService;
 	@GetMapping(path = "/{id}")
 	public UserResponse getUser(@PathVariable String id) throws Exception{
-		UserResponse returnValue = new UserResponse();
 
-		UserDto user = userService.getUserByUserId(id);
-		BeanUtils.copyProperties(user, returnValue);
-
-		return returnValue;
+		return userService.get_user(id);
 
 	}
 
 	@PostMapping()
 	public UserResponse createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception{
-		UserResponse returnValue = new UserResponse();
 
-		UserDto userDto = new UserDto();
-		BeanUtils.copyProperties(userDetails,userDto);
-
-		UserDto user = userService.createUser(userDto);
-		BeanUtils.copyProperties(user, returnValue);
-
-		return returnValue;
+		return userService.create_User(userDetails);
 	}
 
 	@PutMapping(path = "/{id}")
 	public UserResponse updateUser(@PathVariable String id, @RequestBody UserDetailsRequestModel userDetails) throws Exception{
-		UserResponse returnValue = new UserResponse();
-
-		UserDto userDto = new UserDto();
-		BeanUtils.copyProperties(userDetails,userDto);
-
-		UserDto user = userService.updateUser(id,userDto);
-		BeanUtils.copyProperties(user, returnValue);
-
-		return returnValue;
+		return userService.update_User(id,userDetails);
 	}
 
 	@DeleteMapping(path = "/{id}")
 	public OperationStatusModel deleteUser(@PathVariable String id) throws Exception{
 
-
-		OperationStatusModel operationStatusModel = new OperationStatusModel();
-		operationStatusModel.setOperationName(RequestOperationName.DELETE.toString());
-		try {
-			userService.deleteUser(id);
-		}catch (Exception e){
-			operationStatusModel.setOperationResult(RequestOperationStatus.ERROR.toString());
-			return operationStatusModel;
-		}
-		operationStatusModel.setOperationResult(RequestOperationStatus.SUCCESS.toString());
-
-		return operationStatusModel;
+		return userService.delete_User(id);
 	}
 	
 	@GetMapping()
 	public List<UserResponse> getUsers(){
-		List<UserResponse> userResponseList = new ArrayList<>();
-		List<UserDto> userDtoList = userService.getUsers();
-		for (UserDto userDto : userDtoList){
-			UserResponse userResponse = new UserResponse();
-			userResponse.setUserId(userDto.getUserId());
-			userResponse.setEmail(userDto.getEmail());
-			userResponse.setFirstName(userDto.getFirstName());
-			userResponse.setLastName(userDto.getLastName());
-
-			userResponseList.add(userResponse);
-		}
-
-		return userResponseList;
+		return userService.get_Users();
 	}
 	
 }
