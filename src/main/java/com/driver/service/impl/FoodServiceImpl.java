@@ -25,7 +25,7 @@ public class FoodServiceImpl implements FoodService {
     public FoodDto createFood(FoodDto food) {
         FoodEntity foodEntity = new FoodEntity();
         foodEntity.setFoodCategory(food.getFoodCategory());
-        String str = UUID.randomUUID().toString();
+        String str = usingRandomUUID();
         foodEntity.setFoodId(str);
         foodEntity.setFoodPrice(food.getFoodPrice());
         foodEntity.setFoodName(food.getFoodName());
@@ -157,5 +157,13 @@ public class FoodServiceImpl implements FoodService {
 
         }
         return foodDetailsResponseList;
+    }
+
+    static String usingRandomUUID() {
+
+        UUID randomUUID = UUID.randomUUID();
+
+        return randomUUID.toString().replaceAll("_", "");
+
     }
 }

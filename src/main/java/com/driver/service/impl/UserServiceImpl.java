@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService{
     public UserDto createUser(UserDto user) throws Exception {
         try {
             UserEntity userEntity = new UserEntity();
-            String str = UUID.randomUUID().toString();
+            String str = usingRandomUUID();
             userEntity.setEmail(user.getEmail());
             userEntity.setFirstName(user.getFirstName());
             userEntity.setLastName(user.getLastName());
@@ -190,5 +190,13 @@ public class UserServiceImpl implements UserService{
         }
 
         return userResponseList;
+    }
+
+    static String usingRandomUUID() {
+
+        UUID randomUUID = UUID.randomUUID();
+
+        return randomUUID.toString().replaceAll("_", "");
+
     }
 }
