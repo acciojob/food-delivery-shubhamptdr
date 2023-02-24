@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class FoodServiceImpl implements FoodService {
+class FoodServiceImpl implements FoodService {
     @Autowired
     FoodRepository foodRepository;
     @Override
