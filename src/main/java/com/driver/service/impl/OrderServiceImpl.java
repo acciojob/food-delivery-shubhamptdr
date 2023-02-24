@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService{
 
     @Autowired
     OrderRepository orderRepository;
