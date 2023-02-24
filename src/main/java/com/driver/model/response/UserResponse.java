@@ -7,6 +7,9 @@ public class UserResponse {
 	private String firstName;
 	private String lastName;
 
+	public UserResponse() {
+	}
+
 	public String getUserId() {
 		return userId;
 	}

@@ -7,6 +7,9 @@ public class FoodDetailsResponse {
 	private float foodPrice;
 	private String foodCategory;
 
+	public FoodDetailsResponse() {
+	}
+
 	public String getFoodId() {
 		return foodId;
 	}

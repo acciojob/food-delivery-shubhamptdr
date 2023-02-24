@@ -4,6 +4,10 @@ public class OperationStatusModel {
 
 	private String operationResult;
 	private String operationName;
+
+	public OperationStatusModel() {
+	}
+
 	public String getOperationResult() {
 		return operationResult;
 	}
