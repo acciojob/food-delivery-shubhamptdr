@@ -36,6 +36,9 @@ public class UserEntity{
 		this.listOfOrders = listOfOrders;
 	}
 
+	public UserEntity() {
+	}
+
 	public long getId() {
 		return id;
 	}

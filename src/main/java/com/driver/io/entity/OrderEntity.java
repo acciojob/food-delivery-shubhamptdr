@@ -41,6 +41,8 @@ public class OrderEntity {
 		return userEntity;
 	}
 
+	public OrderEntity() {
+	}
 
 	public List<FoodEntity> getListOfFood() {
 		return listOfFood;

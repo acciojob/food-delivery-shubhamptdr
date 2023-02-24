@@ -30,6 +30,9 @@ public class FoodEntity{
 		return orderEntity;
 	}
 
+	public FoodEntity() {
+	}
+
 	public void setOrderEntity(OrderEntity orderEntity) {
 		this.orderEntity = orderEntity;
 	}

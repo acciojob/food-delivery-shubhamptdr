@@ -1,7 +1,6 @@
 package com.driver.service.impl;
 
 import com.driver.io.entity.OrderEntity;
-import com.driver.io.entity.UserEntity;
 import com.driver.io.repository.OrderRepository;
 import com.driver.io.repository.UserRepository;
 import com.driver.model.request.OrderDetailsRequestModel;
@@ -22,8 +21,8 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     OrderRepository orderRepository;
-    @Autowired
-    UserRepository userRepository;
+
+
     @Override
     public OrderDto createOrder(OrderDto order) {
         OrderEntity orderEntity = new OrderEntity();
