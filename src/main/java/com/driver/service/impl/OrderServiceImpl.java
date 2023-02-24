@@ -119,7 +119,14 @@ public class OrderServiceImpl implements OrderService{
         OrderDto orderDto = getOrderById(id);
         BeanUtils.copyProperties(orderDto, returnValue);
 
+        returnValue.setOrderId(orderDto.getOrderId());
+        returnValue.setCost(orderDto.getCost());
+        returnValue.setItems(orderDto.getItems());
+        returnValue.setUserId(orderDto.getUserId());
+        returnValue.setStatus(orderDto.isStatus());
+
         return returnValue;
+
     }
 
     @Override
@@ -127,12 +134,21 @@ public class OrderServiceImpl implements OrderService{
         OrderDetailsResponse returnValue = new OrderDetailsResponse();
 
         OrderDto dto = new OrderDto();
-        BeanUtils.copyProperties(order,dto);
+        dto.setItems(order.getItems());
+        dto.setCost(order.getCost());
+        dto.setUserId(order.getUserId());
 
         OrderDto orderDto = createOrder(dto);
         BeanUtils.copyProperties(orderDto, returnValue);
 
+        returnValue.setOrderId(orderDto.getOrderId());
+        returnValue.setCost(orderDto.getCost());
+        returnValue.setItems(orderDto.getItems());
+        returnValue.setUserId(orderDto.getUserId());
+        returnValue.setStatus(orderDto.isStatus());
+
         return returnValue;
+
     }
 
     @Override
@@ -140,26 +156,35 @@ public class OrderServiceImpl implements OrderService{
         OrderDetailsResponse returnValue = new OrderDetailsResponse();
 
         OrderDto dto = new OrderDto();
-        BeanUtils.copyProperties(order,dto);
+        dto.setUserId(order.getUserId());
+        dto.setCost(order.getCost());
+        dto.setItems(order.getItems());
+
 
         OrderDto orderDto = updateOrderDetails(id,dto);
-        BeanUtils.copyProperties(orderDto, returnValue);
+
+        returnValue.setOrderId(orderDto.getOrderId());
+        returnValue.setUserId(orderDto.getUserId());
+        returnValue.setStatus(orderDto.isStatus());
+        returnValue.setItems(orderDto.getItems());
+        returnValue.setCost(orderDto.getCost());
 
         return returnValue;
+
     }
 
     @Override
     public OperationStatusModel delete_Order(String id) {
         OperationStatusModel operationStatusModel = new OperationStatusModel();
-        operationStatusModel.setOperationName(RequestOperationName.DELETE.name());
+        operationStatusModel.setOperationName(RequestOperationName.DELETE.toString());
 
         try{
             deleteOrder(id);
         }catch (Exception e){
-            operationStatusModel.setOperationResult(RequestOperationStatus.ERROR.name());
+            operationStatusModel.setOperationResult(RequestOperationStatus.ERROR.toString());
             return operationStatusModel;
         }
-        operationStatusModel.setOperationResult(RequestOperationStatus.SUCCESS.name());
+        operationStatusModel.setOperationResult(RequestOperationStatus.SUCCESS.toString());
         return operationStatusModel;
     }
 

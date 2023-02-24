@@ -9,7 +9,6 @@ import com.driver.model.response.RequestOperationName;
 import com.driver.model.response.RequestOperationStatus;
 import com.driver.service.FoodService;
 import com.driver.shared.dto.FoodDto;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -98,8 +97,14 @@ public class FoodServiceImpl implements FoodService {
         FoodDetailsResponse returnValue = new FoodDetailsResponse();
 
         FoodDto foodDto = getFoodById(id);
-        BeanUtils.copyProperties(foodDto, returnValue);
+
+        returnValue.setFoodId(foodDto.getFoodId());
+        returnValue.setFoodPrice(foodDto.getFoodPrice());
+        returnValue.setFoodCategory(foodDto.getFoodCategory());
+        returnValue.setFoodName(foodDto.getFoodName());
+
         return returnValue;
+
     }
 
     @Override
@@ -107,11 +112,19 @@ public class FoodServiceImpl implements FoodService {
         FoodDetailsResponse returnValue = new FoodDetailsResponse();
 
         FoodDto food = new FoodDto();
-        BeanUtils.copyProperties(foodDetails,food);
+        food.setFoodName(foodDetails.getFoodName());
+        food.setFoodCategory(foodDetails.getFoodCategory());
+        food.setFoodPrice(foodDetails.getFoodPrice());
 
         FoodDto foodDto = createFood(food);
-        BeanUtils.copyProperties(foodDto, returnValue);
+
+        returnValue.setFoodName(foodDto.getFoodName());
+        returnValue.setFoodCategory(foodDto.getFoodCategory());
+        returnValue.setFoodPrice(foodDto.getFoodPrice());
+        returnValue.setFoodId(foodDto.getFoodId());
+
         return returnValue;
+
     }
 
     @Override
@@ -119,11 +132,23 @@ public class FoodServiceImpl implements FoodService {
         FoodDetailsResponse returnValue = new FoodDetailsResponse();
 
         FoodDto food = new FoodDto();
-        BeanUtils.copyProperties(foodDetails,food);
+        food.setFoodName(foodDetails.getFoodName());
+        food.setFoodCategory(foodDetails.getFoodCategory());
+        food.setFoodPrice(foodDetails.getFoodPrice());
 
         FoodDto foodDto = updateFoodDetails(id,food);
-        BeanUtils.copyProperties(foodDto, returnValue);
+
+
+        returnValue.setFoodName(foodDto.getFoodName());
+        returnValue.setFoodId(foodDto.getFoodId());
+        returnValue.setFoodPrice(foodDto.getFoodPrice());
+        returnValue.setFoodCategory(foodDto.getFoodCategory());
+
         return returnValue;
+
+
+
+
     }
 
     @Override

@@ -170,15 +170,12 @@ public class UserServiceImpl implements UserService{
 
         String userId = userRepository.findByUserId(id).getUserId();
         UserDto user = updateUser(userId,userDto);
-        BeanUtils.copyProperties(user, returnValue);
+        returnValue.setUserId(user.getUserId());
+        returnValue.setEmail(user.getEmail());
+        returnValue.setFirstName(user.getFirstName());
+        returnValue.setLastName(user.getLastName());
 
         return returnValue;
-
-//        returnValue.setUserId(user.getUserId());
-//        returnValue.setEmail(user.getEmail());
-//        returnValue.setFirstName(user.getFirstName());
-//        returnValue.setLastName(user.getLastName());
-
 
     }
 
