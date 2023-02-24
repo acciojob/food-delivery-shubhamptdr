@@ -35,7 +35,7 @@ public class OrderEntity {
 
 	// parent wrt to foodEntity
 	@OneToMany(mappedBy = "orderEntity",cascade = CascadeType.ALL)
-	private List<FoodEntity> listOfFood = new ArrayList<>();
+	private List<FoodEntity> listOfFood;
 
 	public UserEntity getUserEntity() {
 		return userEntity;

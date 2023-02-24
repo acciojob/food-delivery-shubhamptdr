@@ -26,7 +26,7 @@ public class UserEntity{
 
 	//parent wrt to orderEntity
 	@OneToMany(mappedBy = "userEntity",cascade = CascadeType.ALL)
-	List<OrderEntity> listOfOrders = new ArrayList<>();
+	List<OrderEntity> listOfOrders;
 
 	public List<OrderEntity> getListOfOrders() {
 		return listOfOrders;

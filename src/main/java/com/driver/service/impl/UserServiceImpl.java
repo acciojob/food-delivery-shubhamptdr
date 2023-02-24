@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService{
     UserRepository userRepository;
     @Override
     public UserDto createUser(UserDto user) throws Exception {
-        try {
+
             UserEntity userEntity = new UserEntity();
             String str = usingRandomUUID();
             userEntity.setEmail(user.getEmail());
@@ -33,9 +33,6 @@ public class UserServiceImpl implements UserService{
             userEntity.setUserId(str);
             userRepository.save(userEntity);
 
-        }catch (Exception e){
-            throw new Exception("user exists");
-        }
 
         user.setId(userRepository.findByEmail(user.getEmail()).getId());
         user.setUserId(userRepository.findByEmail(user.getEmail()).getUserId());
@@ -126,9 +123,14 @@ public class UserServiceImpl implements UserService{
     /*----------------------------------------------------------*/
 
     public UserResponse get_user(String id) throws Exception {
+        UserDto user;
+        if(id.contains(".com")){
+            user = getUser(id);
+        }
+        else {
+            user = getUserByUserId(id);
+        }
         UserResponse returnValue = new UserResponse();
-
-        UserDto user = getUserByUserId(id);
         returnValue.setUserId(user.getUserId());
         returnValue.setEmail(user.getEmail());
         returnValue.setFirstName(user.getFirstName());

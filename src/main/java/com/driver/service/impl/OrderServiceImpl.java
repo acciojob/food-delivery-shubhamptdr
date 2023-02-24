@@ -72,7 +72,6 @@ public class OrderServiceImpl implements OrderService{
         orderEntity.setItems(order.getItems());
         orderEntity.setUserId(order.getUserId());
 
-        // -----
         orderRepository.save(orderEntity);
 
         order.setId(orderEntity.getId());
