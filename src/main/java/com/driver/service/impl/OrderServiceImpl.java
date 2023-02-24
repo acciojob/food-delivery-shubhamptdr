@@ -1,7 +1,8 @@
 package com.driver.service.impl;
 
-import com.driver.model.entity.OrderEntity;
+import com.driver.io.entity.OrderEntity;
 import com.driver.io.repository.OrderRepository;
+import com.driver.io.repository.UserRepository;
 import com.driver.model.request.OrderDetailsRequestModel;
 import com.driver.model.response.OperationStatusModel;
 import com.driver.model.response.OrderDetailsResponse;
