@@ -130,7 +130,11 @@ public class UserServiceImpl implements UserService{
         UserResponse returnValue = new UserResponse();
 
         UserDto user = getUserByUserId(id);
-        BeanUtils.copyProperties(user, returnValue);
+        returnValue.setUserId(user.getUserId());
+        returnValue.setEmail(user.getEmail());
+        returnValue.setFirstName(user.getFirstName());
+        returnValue.setLastName(user.getLastName());
+
         return returnValue;
     }
 
@@ -139,11 +143,20 @@ public class UserServiceImpl implements UserService{
         UserResponse returnValue = new UserResponse();
 
         UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(userDetails,userDto);
+        userDto.setFirstName(userDetails.getFirstName());
+        userDto.setLastName(userDetails.getLastName());
+        userDto.setEmail(userDetails.getEmail());
 
         UserDto user = createUser(userDto);
-        BeanUtils.copyProperties(user, returnValue);
+
+        returnValue.setUserId(user.getUserId());
+        returnValue.setEmail(user.getEmail());
+        returnValue.setFirstName(user.getFirstName());
+        returnValue.setLastName(user.getLastName());
+
+
         return returnValue;
+
     }
 
     @Override
