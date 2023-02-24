@@ -1,4 +1,4 @@
-package com.driver.io.entity;
+package com.driver.model.entity;
 
 
 import javax.persistence.*;

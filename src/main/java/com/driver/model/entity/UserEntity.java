@@ -1,6 +1,5 @@
-package com.driver.io.entity;
+package com.driver.model.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
