@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -19,13 +20,19 @@ public class UserServiceImpl implements UserService{
     public UserDto createUser(UserDto user) throws Exception {
         try {
             UserEntity userEntity = new UserEntity();
+            String str = UUID.randomUUID().toString();
             userEntity.setEmail(user.getEmail());
             userEntity.setFirstName(user.getFirstName());
             userEntity.setLastName(user.getLastName());
+            userEntity.setUserId(str);
             userRepository.save(userEntity);
+
         }catch (Exception e){
             throw new Exception("user exists");
         }
+
+        user.setId(userRepository.findByEmail(user.getEmail()).getId());
+        user.setUserId(userRepository.findByEmail(user.getEmail()).getUserId());
 
         return user;
     }
@@ -80,6 +87,9 @@ public class UserServiceImpl implements UserService{
         userEntity.setLastName(user.getLastName());
 
         userRepository.save(userEntity);
+
+        user.setUserId(userEntity.getUserId());
+        user.setId(userEntity.getId());
         return user;
     }
 
@@ -100,7 +110,6 @@ public class UserServiceImpl implements UserService{
             userDto.setFirstName(u.getFirstName());
             userDto.setLastName(u.getLastName());
             userDto.setEmail(u.getEmail());
-            userDto.setId(u.getId());
 
             userDtoList.add(userDto);
         }
