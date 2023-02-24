@@ -18,14 +18,5 @@ public interface OrderService {
 	void deleteOrder(String orderId) throws Exception;
 	List<OrderDto> getOrders();
 
-	OrderDetailsResponse get_Order(String id) throws Exception;
-
-	OrderDetailsResponse create_Order(OrderDetailsRequestModel order);
-
-	OrderDetailsResponse update_Order(String id, OrderDetailsRequestModel order) throws Exception;
-
-	OperationStatusModel delete_Order(String id);
-
-	List<OrderDetailsResponse> get_Orders();
 
 }

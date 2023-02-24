@@ -11,13 +11,11 @@ import com.driver.model.response.RequestOperationName;
 import com.driver.model.response.RequestOperationStatus;
 import com.driver.service.OrderService;
 import com.driver.shared.dto.OrderDto;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -51,9 +49,9 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public OrderDto getOrderById(String orderId) throws Exception {
         OrderEntity orderEntity = orderRepository.findByOrderId(orderId);
-        if(orderEntity == null){
-            throw new Exception("Order not found");
-        }
+//        if(orderEntity == null){
+//            throw new Exception("Order not found");
+//        }
         OrderDto dto = new OrderDto();
         dto.setId(orderEntity.getId());
         dto.setOrderId(orderEntity.getOrderId());
@@ -67,9 +65,9 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public OrderDto updateOrderDetails(String orderId, OrderDto order) throws Exception {
         OrderEntity orderEntity = orderRepository.findByOrderId(orderId);
-        if (orderEntity == null){
-            throw new Exception("Order not found");
-        }
+//        if (orderEntity == null){
+//            throw new Exception("Order not found");
+//        }
 
         orderEntity.setCost(order.getCost());
         orderEntity.setItems(order.getItems());
@@ -112,12 +110,10 @@ public class OrderServiceImpl implements OrderService{
 
     /*----------------------------------------------------------------*/
 
-    @Override
     public OrderDetailsResponse get_Order(String id) throws Exception {
         OrderDetailsResponse returnValue = new OrderDetailsResponse();
 
         OrderDto orderDto = getOrderById(id);
-        BeanUtils.copyProperties(orderDto, returnValue);
 
         returnValue.setOrderId(orderDto.getOrderId());
         returnValue.setCost(orderDto.getCost());
@@ -129,7 +125,6 @@ public class OrderServiceImpl implements OrderService{
 
     }
 
-    @Override
     public OrderDetailsResponse create_Order(OrderDetailsRequestModel order) {
         OrderDetailsResponse returnValue = new OrderDetailsResponse();
 
@@ -139,7 +134,6 @@ public class OrderServiceImpl implements OrderService{
         dto.setUserId(order.getUserId());
 
         OrderDto orderDto = createOrder(dto);
-        BeanUtils.copyProperties(orderDto, returnValue);
 
         returnValue.setOrderId(orderDto.getOrderId());
         returnValue.setCost(orderDto.getCost());
@@ -151,7 +145,6 @@ public class OrderServiceImpl implements OrderService{
 
     }
 
-    @Override
     public OrderDetailsResponse update_Order(String id, OrderDetailsRequestModel order) throws Exception {
         OrderDetailsResponse returnValue = new OrderDetailsResponse();
 
@@ -173,7 +166,6 @@ public class OrderServiceImpl implements OrderService{
 
     }
 
-    @Override
     public OperationStatusModel delete_Order(String id) {
         OperationStatusModel operationStatusModel = new OperationStatusModel();
         operationStatusModel.setOperationName(RequestOperationName.DELETE.toString());
@@ -188,7 +180,6 @@ public class OrderServiceImpl implements OrderService{
         return operationStatusModel;
     }
 
-    @Override
     public List<OrderDetailsResponse> get_Orders() {
         List<OrderDto> list = getOrders();
         List<OrderDetailsResponse> orderDetailsResponseList = new ArrayList<>();

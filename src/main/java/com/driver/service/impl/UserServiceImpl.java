@@ -125,7 +125,6 @@ public class UserServiceImpl implements UserService{
 
     /*----------------------------------------------------------*/
 
-    @Override
     public UserResponse get_user(String id) throws Exception {
         UserResponse returnValue = new UserResponse();
 
@@ -138,7 +137,6 @@ public class UserServiceImpl implements UserService{
         return returnValue;
     }
 
-    @Override
     public UserResponse create_User(UserDetailsRequestModel userDetails) throws Exception {
         UserResponse returnValue = new UserResponse();
 
@@ -159,7 +157,6 @@ public class UserServiceImpl implements UserService{
 
     }
 
-    @Override
     public UserResponse update_User(String id, UserDetailsRequestModel userDetails) throws Exception {
         UserResponse returnValue = new UserResponse();
 
@@ -179,7 +176,6 @@ public class UserServiceImpl implements UserService{
 
     }
 
-    @Override
     public OperationStatusModel delete_User(String id) {
 
         OperationStatusModel operationStatusModel = new OperationStatusModel();
@@ -195,7 +191,6 @@ public class UserServiceImpl implements UserService{
         return operationStatusModel;
     }
 
-    @Override
     public List<UserResponse> get_Users() {
         List<UserResponse> userResponseList = new ArrayList<>();
         List<UserDto> userDtoList = getUsers();

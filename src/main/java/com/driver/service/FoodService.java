@@ -18,13 +18,5 @@ public interface FoodService {
 	void deleteFoodItem(String id) throws Exception;
 	List<FoodDto> getFoods();
 
-    FoodDetailsResponse get_Food_By_Id(String id) throws Exception;
 
-	FoodDetailsResponse create_Food(FoodDetailsRequestModel foodDetails);
-
-	FoodDetailsResponse update_Food(String id, FoodDetailsRequestModel foodDetails) throws Exception;
-
-	OperationStatusModel delete_Food(String id);
-
-	List<FoodDetailsResponse> get_foods();
 }

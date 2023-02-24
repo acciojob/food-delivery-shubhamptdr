@@ -19,14 +19,5 @@ public interface UserService{
 	void deleteUser(String userId) throws Exception;
 	List<UserDto> getUsers();
 
-	UserResponse get_user(String id) throws Exception;
-
-	UserResponse create_User(UserDetailsRequestModel userDetails) throws Exception;
-
-	UserResponse update_User(String id, UserDetailsRequestModel userDetails) throws Exception;
-
-	OperationStatusModel delete_User(String id);
-
-	List<UserResponse> get_Users();
 
 }
