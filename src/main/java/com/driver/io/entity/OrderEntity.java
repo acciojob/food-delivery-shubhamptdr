@@ -1,11 +1,10 @@
 package com.driver.io.entity;
 
-import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.*;
 
 @Entity(name = "orders")
 public class OrderEntity {
@@ -28,6 +27,32 @@ public class OrderEntity {
 	
 	@Column(nullable = false)
 	private boolean status;
+
+	//child wrt to userEntity
+	@ManyToOne
+	@JoinColumn
+	private UserEntity userEntity;
+
+	// parent wrt to foodEntity
+	@OneToMany(mappedBy = "orderEntity",cascade = CascadeType.ALL)
+	private List<FoodEntity> listOfFood = new ArrayList<>();
+
+	public UserEntity getUserEntity() {
+		return userEntity;
+	}
+
+
+	public List<FoodEntity> getListOfFood() {
+		return listOfFood;
+	}
+
+	public void setListOfFood(List<FoodEntity> listOfFood) {
+		this.listOfFood = listOfFood;
+	}
+
+	public void setUserEntity(UserEntity userEntity) {
+		this.userEntity = userEntity;
+	}
 
 	public long getId() {
 		return id;

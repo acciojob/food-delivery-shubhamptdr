@@ -1,11 +1,9 @@
 package com.driver.io.entity;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name = "users")
 public class UserEntity{
@@ -25,6 +23,18 @@ public class UserEntity{
 
 	@Column(nullable = false, length = 120, unique = true)
 	private String email;
+
+	//parent wrt to orderEntity
+	@OneToMany(mappedBy = "userEntity",cascade = CascadeType.ALL)
+	List<OrderEntity> listOfOrders = new ArrayList<>();
+
+	public List<OrderEntity> getListOfOrders() {
+		return listOfOrders;
+	}
+
+	public void setListOfOrders(List<OrderEntity> listOfOrders) {
+		this.listOfOrders = listOfOrders;
+	}
 
 	public long getId() {
 		return id;
